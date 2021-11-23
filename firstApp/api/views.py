@@ -43,3 +43,13 @@ class CarSpecsViewset(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
+    def destroy(self, request, *args, **kwargs):
+        logedin_user = request.user
+        if logedin_user == 'admin':
+            car = self.get_object()
+            car.delete()
+            response_message = {"Xabar": "Mahsulot o'chirildi" }
+        else:
+            response_message = {"Xabar": "Mumkin emas" }
+
+        return Response(response_message)
